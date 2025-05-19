@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>ShellShock 嵌入測試</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #111;
+      color: #fff;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+    }
+    iframe {
+      border: none;
+      width: 100%;
+      height: 90vh;
+    }
+    .error-message {
+      color: red;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>ShellShock 嵌入測試</h1>
+
+  <div id="error" class="error-message">無法載入 shellshock.io，可能已被封鎖嵌入。</div>
+
+  <iframe id="game-frame" src="https://shellshock.io" allowfullscreen></iframe>
+
+  <script>
+    const iframe = document.getElementById("game-frame");
+    const errorDiv = document.getElementById("error");
+
+    // 加入一個 timeout，如果 iframe 沒有載入成功就顯示錯誤訊息
+    setTimeout(() => {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        if (!doc || doc.body.innerHTML.length === 0) {
+          throw new Error("無內容");
+        }
+      } catch (e) {
+        errorDiv.style.display = "block";
+        iframe.style.display = "none";
+        console.error("無法嵌入該頁面。", e);
+      }
+    }, 3000); // 等 3 秒判斷是否載入成功
+  </script>
+</body>
+</html>
