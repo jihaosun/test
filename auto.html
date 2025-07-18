@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自動連點器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>自動連點器</h1>
+    <button id="startBtn">開始連點</button>
+    <p>點擊此按鈕以啟動自動連點。</p>
+
+    <div id="clickTarget" style="margin-top: 50px;">
+        <button>目標按鈕</button>
+    </div>
+
+    <script>
+        let clickInterval;
+        let clickSpeed = 100;  // 設定點擊間隔時間（毫秒），100ms即每秒點擊10次
+
+        // 開始連點的函數
+        document.getElementById("startBtn").addEventListener("click", function() {
+            this.disabled = true;  // 禁用開始按鈕，防止重複啟動
+
+            clickInterval = setInterval(function() {
+                let target = document.querySelector("#clickTarget button");  // 目標元素是 id="clickTarget" 裡的按鈕
+                if (target) {
+                    target.click();  // 執行點擊
+                }
+            }, clickSpeed);
+        });
+
+        // 如果你想停止連點，打開控制台並輸入 `clearInterval(clickInterval);`
+    </script>
+
+</body>
+</html>
